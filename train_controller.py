@@ -52,7 +52,7 @@ def create_results(result_queue, fitlist):
 
 
 def train_controller(current_time):
-    ##CMA-ESアルゴリズムを用いてコントローラをトレーニングし、マルチプロセッシングを用いた並列テストにより候補解を改善する
+    ##CMA-ESアルゴリズムを用いてコントローラをトレーニングし、マルチプロセッシングを用いた並列テストにより候補解を改善
 
     current_time = str(current_time)
     number_generations = 1
@@ -77,7 +77,7 @@ def train_controller(current_time):
         solutions = solver.ask()
         fitlist = np.zeros(POPULATION)
         eval_left = 0
-        ## Once a level is beaten, remove it from the training set of levels
+        ## レベルを打ち負かした後、そのレベルをトレーニングセットから削除
         if current_best > SCORE_CAP or not current_game:
             if not current_game or len(levels[current_game]) == 0:
                 current_game = games[0]
