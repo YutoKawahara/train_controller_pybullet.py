@@ -12,10 +12,9 @@ from lib.agent_play import PybulletGame
 from models.controller import Controller
 
 def compute_ranks(x):
-  """
-  [0, len(x)] におけるランクを返す。
-  (https://github.com/openai/evolution-strategies-starter/blob/master/es_distributed/es.py)
-  """
+  ##[0, len(x)] におけるランクを返す。
+  ##(https://github.com/openai/evolution-strategies-starter/blob/master/es_distributed/es.py)
+
   assert x.ndim == 1
   ranks = np.empty(len(x), dtype=int)
   ranks[x.argsort()] = np.arange(len(x))
@@ -23,9 +22,7 @@ def compute_ranks(x):
 
 
 def rankmin(x):
-  """
-  https://github.com/openai/evolution-strategies-starter/blob/master/es_distributed/es.py
-  """
+  ##https://github.com/openai/evolution-strategies-starter/blob/master/es_distributed/es.py
   y = compute_ranks(x.ravel()).reshape(x.shape).astype(np.float32)
   y /= (x.size - 1)
   y -= .5
@@ -33,7 +30,7 @@ def rankmin(x):
 
 
 def init_controller(controller, solution):
-    """  コントローラーの重みをCMAが提案するものに変更する """
+    ##コントローラーの重みをCMAが提案するものに変更
 
     new_w1 = torch.tensor(solution, dtype=torch.double, device=DEVICE)
     params = controller.state_dict() 
@@ -42,7 +39,7 @@ def init_controller(controller, solution):
 
 
 def create_results(result_queue, fitlist):
-    """  結果キューを空にしてfitlstを適応させ、表示用のタイマーを取得する。"""
+    ##結果キューを空にしてfitlstを適応させ、表示用のタイマーを取得
 
     times = []
     for i in range(POPULATION):
@@ -55,9 +52,7 @@ def create_results(result_queue, fitlist):
 
 
 def train_controller(current_time):
-    """
-    CMA-ESアルゴリズムを用いてコントローラをトレーニングし、マルチプロセッシングを用いた並列テストにより候補解を改善する
-    """
+    ##CMA-ESアルゴリズムを用いてコントローラをトレーニングし、マルチプロセッシングを用いた並列テストにより候補解を改善する
 
     current_time = str(current_time)
     number_generations = 1
